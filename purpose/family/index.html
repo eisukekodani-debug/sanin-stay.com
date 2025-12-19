@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【エリア・目的名】の宿一覧｜山陰一棟貸し図鑑</title>
+    <meta name="description" content="山陰（鳥取・島根）の厳選された一棟貸し宿一覧。家族旅行、グループ旅行に最適な古民家やログハウスをご紹介します。">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#f97316',
+                        'brand-light': '#fff7ed',
+                        'text-main': '#475569',
+                        'text-sub': '#94a3b8',
+                        'bg-base': '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'card': '16px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #475569;
+            font-feature-settings: "palt";
+            letter-spacing: 0.03em;
+        }
+        
+        /* 施設カード */
+        .stay-card {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .stay-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border-color: #fdba74;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-sm md:text-base leading-relaxed flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="w-full bg-white/95 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../../index.html" class="flex items-center gap-2 group hover:opacity-80 transition">
+                <i class="fa-solid fa-house-chimney text-xl text-brand"></i>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-brand font-bold leading-none">家族で泊まる</span>
+                    <span class="text-lg font-bold text-text-main tracking-tight leading-none">
+                        一棟貸し図鑑
+                    </span>
+                </div>
+            </a>
+            
+            <nav class="hidden md:flex gap-6 text-sm font-bold text-text-main items-center">
+                <a href="../../index.html#area" class="hover:text-brand transition">エリア</a>
+                <a href="../../index.html#purpose" class="hover:text-brand transition">こだわり</a>
+            </nav>
+            
+            <!-- Mobile Menu Icon -->
+            <button class="md:hidden text-xl text-text-main p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-5xl mx-auto px-4 md:px-6 py-8">
+
+        <!-- Breadcrumb -->
+        <nav class="text-xs text-text-sub mb-6 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
+            <a href="../../index.html" class="hover:text-brand"><i class="fa-solid fa-home"></i> TOP</a>
+            <i class="fa-solid fa-angle-right text-[10px]"></i>
+            <span class="font-bold text-text-main">家族・子連れ向けの宿</span>
+        </nav>
+
+        <!-- Page Title -->
+        <section class="mb-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-gray-200 pb-6">
+                <div>
+                    <span class="text-brand font-bold text-xs bg-brand-light px-2 py-1 rounded inline-block mb-2">Area</span>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-text-main">
+                        家族・子連れ向けの宿
+                    </h1>
+                    <p class="text-sm text-text-sub mt-2 font-medium">
+                        森の静寂とサウナを楽しむ、リゾートエリア。
+                    </p>
+                </div>
+                <div class="text-right">
+                    <span class="text-sm font-bold text-text-sub">全 <span class="text-xl text-text-main font-extrabold">3</span> 件</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stay List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Item 1 -->
+            <a href="../../stay/daisen-001/index.html" class="group stay-card block">
+                <div class="aspect-[4/3] overflow-hidden relative bg-gray-100">
+                    <img src="../../images/sample-hero.webp" alt="施設名" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                    <!-- バッジエリア -->
+                    <div class="absolute top-3 left-3 flex gap-1">
+                        <span class="bg-brand text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">人気No.1</span>
+                    </div>
+                    <!-- 間取り図ありアイコン -->
+                    <div class="absolute bottom-3 right-3 bg-white/90 text-blue-500 text-[10px] font-bold px-2 py-1 rounded shadow-sm flex items-center gap-1">
+                        <i class="fa-solid fa-ruler-combined"></i> 間取り図
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h2 class="text-lg font-bold text-text-main leading-tight group-hover:text-brand transition">
+                            森と星空のログハウス
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-text-sub font-bold mb-4">
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-user-group text-brand"></i> 最大6名</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-warehouse text-brand"></i> 98㎡</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-bed text-brand"></i> 2寝室</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-4">
+                        <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded">#サウナ</span>
+                        <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded">#薪ストーブ</span>
+                        <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded">#BBQ</span>
+                    </div>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] text-gray-400 font-bold block">参考価格</span>
+                            <span class="text-base font-extrabold text-brand">¥35,000<span class="text-[10px] text-text-main font-normal">/棟〜</span></span>
+                        </div>
+                        <span class="text-xs font-bold text-brand flex items-center">
+                            詳細を見る <i class="fa-solid fa-circle-arrow-right ml-1"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Item 2 (Dummy) -->
+            <a href="#" class="group stay-card block opacity-60">
+                <div class="aspect-[4/3] overflow-hidden relative bg-gray-100">
+                    <div class="absolute inset-0 flex items-center justify-center bg-white/50 z-10 font-bold text-gray-500">準備中</div>
+                    <img src="https://placehold.co/600x400?text=House+2" alt="施設名" class="w-full h-full object-cover grayscale">
+                </div>
+                <div class="p-5">
+                    <h2 class="text-lg font-bold text-gray-400 mb-2">大山・天空のヴィラ</h2>
+                    <div class="flex items-center gap-3 text-xs text-gray-300 font-bold mb-4">
+                        <span><i class="fa-solid fa-user-group"></i> 最大8名</span>
+                        <span><i class="fa-solid fa-warehouse"></i> 120㎡</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-4">
+                        <span class="text-[10px] bg-gray-50 text-gray-300 px-2 py-1 rounded">#ドッグラン</span>
+                    </div>
+                    <div class="pt-4 border-t border-gray-100">
+                        <span class="text-xs text-gray-400">詳細準備中</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- B2B Banner -->
+        <div class="mt-20">
+            <a href="../../business/index.html" class="block bg-brand-light border border-orange-100 rounded-xl p-6 text-center hover:shadow-md transition">
+                <p class="text-brand font-bold text-sm mb-1">
+                    <i class="fa-solid fa-key mr-1"></i> 施設オーナー様へ
+                </p>
+                <p class="text-text-main text-xs font-bold">
+                    大山エリアで宿泊施設の掲載をご希望の方はこちら
+                </p>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-white border-t border-gray-200 py-10 px-6 text-center">
+        <div class="flex flex-col items-center gap-4">
+            <div class="flex gap-4 text-[11px] text-gray-400 font-bold">
+                <a href="../../about/index.html" class="hover:text-text-main transition">編集部について</a>
+                <a href="../../contact/index.html" class="hover:text-text-main transition">お問い合わせ</a>
+            </div>
+            <p class="text-[10px] text-gray-400">&copy; 2025 Sanin Stay / AP Company LLC.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

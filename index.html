@@ -1,12 +1,457 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>sanin-stay</title>
-  <meta name="description" content="山陰の一棟貸しを編集長が実名で紹介する図鑑サイト（準備中）">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山陰の隠れ家・一棟貸し図鑑｜大山の古民家宿厳選ガイド</title>
+    <meta name="description" content="山陰（鳥取・島根）の一棟貸し宿・古民家を、宿泊運営のプロが厳選。大山エリアを中心に、子連れ家族や3世代旅行での「失敗しない宿選び」をサポートします。">
+    
+    <!-- SEO: 構造化データ (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "山陰の隠れ家・一棟貸し図鑑",
+      "url": "https://sanin-stay.com/",
+      "description": "山陰（鳥取・島根）の一棟貸し宿・古民家を厳選紹介するメディア。",
+      "publisher": {
+        "@type": "Organization",
+        "name": "APカンパニー合同会社",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sanin-stay.com/images/logo.png"
+        }
+      }
+    }
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Noto Sans JP: 読みやすさと信頼感 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#f97316',      /* 明るく元気なオレンジ */
+                        'brand-light': '#fff7ed',/* 温かみのあるベージュ */
+                        'text-main': '#475569',  /* 柔らかいダークグレー */
+                        'text-sub': '#94a3b8',   /* 淡いグレー */
+                        'bg-base': '#ffffff',    /* 清潔な白 */
+                        'accent-yellow': '#fde047', /* 強調用の黄色 */
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'glow': '0 0 15px rgba(249, 115, 22, 0.2)',
+                    },
+                    borderRadius: {
+                        'card': '16px',
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #475569;
+            font-feature-settings: "palt";
+            letter-spacing: 0.03em;
+        }
+        
+        /* 検索パネル */
+        .search-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        /* フォーム要素 */
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f97316' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+
+        /* カードスタイル */
+        .card {
+            background-color: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border-color: #fdba74;
+        }
+
+        /* 準備中カード */
+        .card-disabled {
+            background-color: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 16px;
+            overflow: hidden;
+            opacity: 0.8;
+            cursor: not-allowed;
+            position: relative;
+        }
+        .card-disabled img {
+            filter: grayscale(100%);
+            opacity: 0.6;
+        }
+        .coming-soon-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(71, 85, 105, 0.8);
+            color: white;
+            padding: 6px 16px;
+            font-size: 13px;
+            border-radius: 20px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        /* マーカー線（アンダーライン） */
+        .marker-orange {
+            position: relative;
+            z-index: 1;
+        }
+        .marker-orange::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: #ffedd5;
+            z-index: -1;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body>
-  <h1>sanin-stay（準備中）</h1>
+<body class="font-sans antialiased text-sm md:text-base leading-relaxed flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="w-full bg-white/95 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 md:h-20 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-2 group hover:opacity-80 transition" aria-label="トップページへ">
+                <i class="fa-solid fa-house-chimney text-2xl text-brand"></i>
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-brand font-bold leading-none">家族で泊まる</span>
+                    <span class="text-xl font-bold text-text-main tracking-tight leading-none">
+                        一棟貸し図鑑
+                    </span>
+                </div>
+            </a>
+            
+            <nav class="hidden md:flex gap-8 text-sm font-bold text-text-main items-center">
+                <a href="#area" class="hover:text-brand transition flex items-center gap-1"><i class="fa-solid fa-map-location-dot text-brand/50"></i> エリア</a>
+                <a href="#purpose" class="hover:text-brand transition flex items-center gap-1"><i class="fa-solid fa-users text-brand/50"></i> こだわり</a>
+                <!-- 修正箇所：編集部リンクをAboutページへ -->
+                <a href="./about/index.html" class="hover:text-brand transition">編集部</a>
+                <div class="h-4 w-px bg-gray-200"></div>
+                <span class="text-xs font-bold text-gray-300 cursor-not-allowed">English</span>
+            </nav>
+            
+            <button class="md:hidden text-xl text-text-main p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full">
+        
+        <!-- Hero Section: 新デザイン -->
+        <section class="relative pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden bg-gradient-to-b from-orange-50/50 to-white">
+            <!-- 背景装飾パターン -->
+            <div class="absolute inset-0 bg-hero-pattern opacity-100 z-0 pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto px-4 relative z-10">
+                
+                <!-- 1. キャッチコピー (画像の上) -->
+                <div class="text-center max-w-3xl mx-auto mb-10">
+                    <span class="inline-block py-1 px-3 rounded-full bg-white text-brand text-xs font-bold mb-4 border border-orange-200 shadow-sm">
+                        <i class="fa-solid fa-check mr-1"></i> 全物件「間取り図」付き
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-text-main mb-6 leading-tight">
+                        山陰の<span class="marker-orange px-1">失敗しない</span>宿選び。
+                    </h1>
+                    <p class="text-text-main/80 text-base md:text-lg font-medium leading-relaxed">
+                        子連れ・3世代旅行に。<br class="md:hidden">宿泊運営のプロが厳選した一棟貸しガイド。
+                    </p>
+                </div>
+
+                <!-- 2. メインビジュアル & 検索パネル -->
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- メイン画像（明るくクリアに） -->
+                    <div class="rounded-3xl overflow-hidden shadow-float relative aspect-[16/9] md:aspect-[2/1]">
+                        <img src="images/intro-main.webp" alt="家族で過ごす山陰の宿" class="w-full h-full object-cover">
+                        <!-- 画像内キャプション（控えめに） -->
+                        <div class="absolute bottom-4 right-4 text-white text-xs font-bold bg-black/20 backdrop-blur-md px-3 py-1 rounded-full">
+                            Photo: 大山町
+                        </div>
+                    </div>
+
+                    <!-- 検索パネル（画像の下部に重ねて配置） -->
+                    <div class="relative -mt-16 md:-mt-20 mx-4 md:mx-10">
+                        <div class="search-panel p-6 md:p-8">
+                            <p class="text-center text-sm font-bold text-brand mb-4 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass"></i> 条件を指定して探す
+                            </p>
+                            <form action="#area" class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                <!-- エリア -->
+                                <div class="md:col-span-5">
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 ml-1">エリア</label>
+                                    <div class="relative">
+                                        <select class="form-select w-full bg-brand-light border-0 rounded-xl p-4 text-text-main font-bold focus:ring-2 focus:ring-brand outline-none cursor-pointer hover:bg-orange-100 transition shadow-inner">
+                                            <option>大山エリア</option>
+                                            <option disabled>米子・皆生（準備中）</option>
+                                            <option disabled>境港（準備中）</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- こだわり -->
+                                <div class="md:col-span-5">
+                                    <label class="block text-xs font-bold text-gray-500 mb-1 ml-1">こだわり・メンバー</label>
+                                    <div class="relative">
+                                        <select class="form-select w-full bg-brand-light border-0 rounded-xl p-4 text-text-main font-bold focus:ring-2 focus:ring-brand outline-none cursor-pointer hover:bg-orange-100 transition shadow-inner">
+                                            <option value="">誰と泊まりますか？</option>
+                                            <option>家族・子連れ</option>
+                                            <option>3世代・大人数</option>
+                                            <option disabled>ペット同伴（準備中）</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- ボタン -->
+                                <div class="md:col-span-2 flex items-end">
+                                    <button type="submit" class="w-full bg-brand hover:bg-orange-600 text-white font-bold py-4 px-4 rounded-xl shadow-lg transition transform hover:scale-105 active:scale-95 flex items-center justify-center h-[56px]">
+                                        <i class="fa-solid fa-search md:hidden mr-2"></i> 検索
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Area List: 明るいカードデザイン -->
+        <section id="area" class="py-16 md:py-24 max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-text-main mb-3">
+                    <span class="marker-orange px-2">エリアから探す</span>
+                </h2>
+                <p class="text-sm text-text-sub font-medium">まずは、人気の「大山」エリアから。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Daisen (Active) -->
+                <a href="./area/daisen/index.html" class="group card block relative overflow-hidden">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <img src="images/area-daisen.webp" alt="大山エリア" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
+                            <span class="bg-brand text-white text-[10px] font-bold px-2 py-1 rounded mb-1 inline-block">掲載数 No.1</span>
+                            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                                大山エリア
+                                <i class="fa-solid fa-circle-arrow-right text-white/80 text-base"></i>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-sm font-bold text-brand mb-2"><i class="fa-solid fa-tree mr-1"></i> 森とサウナと雪景色</p>
+                        <p class="text-sm text-text-main leading-relaxed">
+                            西日本最大級のブナの森が広がるリゾート地。
+                            プライベートサウナ付きログハウスや、
+                            雪景色を楽しめる古民家が充実。
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Yonago / Sakaiminato (Coming Soon) -->
+                <div class="card-disabled">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="images/area-yonago-sakaiminato.webp" alt="米子・境港エリア" class="w-full h-full object-cover">
+                    </div>
+                    <div class="coming-soon-label">準備中</div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-400 mb-2">米子・境港エリア</h3>
+                        <p class="text-sm text-gray-400">海辺の温泉と港町</p>
+                    </div>
+                </div>
+
+                <!-- Kurayoshi / Misasa (Coming Soon) -->
+                <div class="card-disabled">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="images/area-kurayoshi-misasa.webp" alt="倉吉・三朝エリア" class="w-full h-full object-cover">
+                    </div>
+                    <div class="coming-soon-label">準備中</div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-400 mb-2">倉吉・三朝エリア</h3>
+                        <p class="text-sm text-gray-400">白壁土蔵と湯治場</p>
+                    </div>
+                </div>
+
+                <!-- Tottori / Iwami (Coming Soon) -->
+                <div class="card-disabled">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="images/area-tottori-iwami.webp" alt="鳥取・岩美エリア" class="w-full h-full object-cover">
+                    </div>
+                    <div class="coming-soon-label">準備中</div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-400 mb-2">鳥取・岩美エリア</h3>
+                        <p class="text-sm text-gray-400">砂丘と透明な海</p>
+                    </div>
+                </div>
+
+                <!-- Matsue / Izumo (Coming Soon) -->
+                <div class="card-disabled">
+                    <div class="aspect-[4/3] overflow-hidden">
+                        <img src="images/area-matsue-izumo.webp" alt="松江・出雲エリア" class="w-full h-full object-cover">
+                    </div>
+                    <div class="coming-soon-label">準備中</div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-400 mb-2">松江・出雲エリア</h3>
+                        <p class="text-sm text-gray-400">水の都と神話の国</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Purpose List: こだわり・メンバー -->
+        <section id="purpose" class="py-16 bg-brand-light border-y border-orange-100">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl md:text-3xl font-bold text-text-main mb-3">
+                        <span class="marker-orange px-2">こだわり・メンバーで選ぶ</span>
+                    </h2>
+                    <p class="text-sm text-text-sub font-medium">誰と行きますか？ 旅のスタイルに合わせて。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="./purpose/family/index.html" class="group card p-6 hover:bg-white flex flex-col h-full text-center items-center justify-center border-2 border-transparent hover:border-orange-200">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-3xl text-brand mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-people-roof"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main mb-1 group-hover:text-brand transition">家族・子連れ</h3>
+                        <p class="text-xs text-text-sub font-bold bg-white px-2 py-1 rounded-full border border-gray-100 mt-2">周りを気にせず安心</p>
+                    </a>
+
+                    <a href="./purpose/group/index.html" class="group card p-6 hover:bg-white flex flex-col h-full text-center items-center justify-center border-2 border-transparent hover:border-orange-200">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl text-blue-500 mb-4 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-users-line"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main mb-1 group-hover:text-blue-500 transition">3世代・大人数</h3>
+                        <p class="text-xs text-text-sub font-bold bg-white px-2 py-1 rounded-full border border-gray-100 mt-2">寝室が分かれて快適</p>
+                    </a>
+
+                    <!-- Dummy for layout balance -->
+                    <div class="card p-6 bg-gray-50 opacity-60 cursor-not-allowed text-center flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-3xl text-gray-400 mb-4">
+                            <i class="fa-solid fa-paw"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-400 mb-1">ペット同伴</h3>
+                        <p class="text-xs text-gray-400 mt-2">準備中</p>
+                    </div>
+
+                    <div class="card p-6 bg-gray-50 opacity-60 cursor-not-allowed text-center flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-3xl text-gray-400 mb-4">
+                            <i class="fa-solid fa-laptop"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-400 mb-1">ワーケーション</h3>
+                        <p class="text-xs text-gray-400 mt-2">準備中</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Utility Links -->
+        <section class="py-16 max-w-4xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <a href="./column/index.html" class="flex items-center gap-4 p-6 rounded-2xl border-2 border-gray-100 bg-white hover:border-brand transition group shadow-sm">
+                    <div class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center text-2xl text-brand group-hover:bg-brand group-hover:text-white transition">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-text-main group-hover:text-brand text-lg">旅のヒント・コラム</h4>
+                        <p class="text-xs text-text-sub mt-1">冬用タイヤや買い物情報など</p>
+                    </div>
+                    <i class="fa-solid fa-angle-right ml-auto text-gray-300 group-hover:text-brand"></i>
+                </a>
+                
+                <!-- 修正箇所：編集長についてリンクをAboutページへ -->
+                <a href="./about/index.html" class="flex items-center gap-4 p-6 rounded-2xl border-2 border-gray-100 bg-white hover:border-brand transition group shadow-sm">
+                    <div class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center text-2xl text-brand group-hover:bg-brand group-hover:text-white transition">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-text-main group-hover:text-brand text-lg">編集長について</h4>
+                        <p class="text-xs text-text-sub mt-1">運営者のプロフィール</p>
+                    </div>
+                    <i class="fa-solid fa-angle-right ml-auto text-gray-300 group-hover:text-brand"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-white border-t-4 border-brand pt-16 pb-10">
+        <div class="max-w-5xl mx-auto px-6">
+            
+            <div class="bg-gray-50 rounded-2xl p-8 mb-12 border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h4 class="font-bold text-text-main text-sm mb-2"><i class="fa-solid fa-key text-brand mr-2"></i>施設オーナー様へ</h4>
+                    <p class="text-xs text-text-sub leading-relaxed">
+                        宿泊施設の稼働率向上・運営サポートのご相談はこちら。<br>
+                        「良い点も悪い点も伝える」方針で、ミスマッチを防ぎます。
+                    </p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="./business/index.html" class="bg-brand text-white text-xs font-bold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-md">運営サポート</a>
+                    <a href="./business/contact/index.html" class="bg-white border border-gray-300 text-text-main text-xs font-bold py-3 px-6 rounded-full hover:bg-gray-50 transition">掲載問い合わせ</a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px] text-gray-400 font-bold">
+                <div class="flex items-center gap-2">
+                    <span class="text-brand font-extrabold text-lg">山陰</span>
+                    <span class="text-base text-text-main">一棟貸し図鑑</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="./about/index.html" class="hover:text-brand transition">編集部について</a>
+                    <a href="./privacy/index.html" class="hover:text-brand transition">プライバシーポリシー</a>
+                    <a href="./contact/index.html" class="hover:text-brand transition">お問い合わせ</a>
+                </div>
+                <p>&copy; 2025 Sanin Stay / AP Company LLC.</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

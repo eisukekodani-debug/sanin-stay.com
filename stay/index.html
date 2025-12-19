@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【施設名】｜山陰の隠れ家・一棟貸し図鑑</title>
+    <meta name="description" content="施設の紹介文（120文字程度）。誰におすすめか、どんな体験ができるかを具体的に書きましょう。">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config (Topページと共通) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#f97316',      /* オレンジ */
+                        'brand-light': '#fff7ed',/* ベージュ */
+                        'text-main': '#475569',  /* ダークグレー */
+                        'text-sub': '#94a3b8',   /* 淡いグレー */
+                        'bg-base': '#ffffff',    /* 白 */
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    borderRadius: {
+                        'card': '16px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #475569;
+            font-feature-settings: "palt";
+            letter-spacing: 0.03em;
+            padding-bottom: 100px; /* フッター固定ボタン用余白 */
+        }
+        
+        /* 設備アイコンボックス */
+        .amenity-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #64748b;
+            background: #fff;
+        }
+        .amenity-box i {
+            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+            color: #f97316;
+        }
+
+        /* テーブルスタイル */
+        .spec-table th {
+            text-align: left;
+            padding: 12px;
+            color: #64748b;
+            font-weight: bold;
+            border-bottom: 1px solid #f1f5f9;
+            width: 30%;
+        }
+        .spec-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-sm md:text-base leading-relaxed">
+
+    <!-- Header (簡易版) -->
+    <header class="w-full bg-white/95 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 h-14 flex justify-between items-center">
+            <a href="../../index.html" class="flex items-center gap-2 text-text-main hover:text-brand transition">
+                <i class="fa-solid fa-chevron-left"></i>
+                <span class="font-bold text-sm">一覧に戻る</span>
+            </a>
+            <h1 class="text-sm font-bold text-text-main truncate max-w-[200px]">【施設名を入力】</h1>
+            <!-- シェアボタン -->
+            <button class="text-text-sub hover:text-brand transition"><i class="fa-solid fa-share-nodes"></i></button>
+        </div>
+    </header>
+
+    <main class="w-full max-w-4xl mx-auto px-4 md:px-0 pt-6">
+
+        <!-- 1. ヒーローエリア -->
+        <section class="mb-10">
+            <div class="rounded-3xl overflow-hidden shadow-card aspect-video relative mb-6">
+                <img src="../../images/sample-hero.webp" alt="施設のメイン写真" class="w-full h-full object-cover">
+                <div class="absolute bottom-4 left-4">
+                    <span class="bg-brand text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">大山エリア</span>
+                </div>
+            </div>
+            
+            <div class="px-2">
+                <h1 class="text-2xl md:text-3xl font-bold text-text-main mb-3 leading-tight">
+                    森と星空に包まれる、<br>北欧風ログハウス。
+                </h1>
+                <div class="flex flex-wrap gap-3 text-sm text-text-sub font-bold">
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-user-group text-brand"></i> 最大6名</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-bed text-brand"></i> 寝室2部屋</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-warehouse text-brand"></i> 98㎡</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 間取り図 & 使い方 (Key Feature) -->
+        <section class="mb-16 bg-brand-light rounded-3xl p-6 md:p-10 border border-orange-100 mx-2 md:mx-0">
+            <div class="text-center mb-6">
+                <h2 class="text-lg font-bold text-brand flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-ruler-combined"></i> 間取りと寝室の使い分け
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+                <img src="../../images/sample-floorplan.webp" alt="間取り図" class="w-full h-auto">
+            </div>
+
+            <!-- 滞在マトリクス -->
+            <div class="bg-white rounded-xl overflow-hidden border border-orange-100">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-orange-50 text-brand font-bold">
+                        <tr>
+                            <th class="p-3 w-1/3">メンバー</th>
+                            <th class="p-3">おすすめの使い方</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr>
+                            <th class="p-3 font-bold text-text-main">家族・子連れ<br><span class="text-xs text-text-sub font-normal">(3~4名)</span></th>
+                            <td class="p-3 text-text-main">全員で1階の和室を使用。お布団ならお子様がベッドから落ちる心配もありません。</td>
+                        </tr>
+                        <tr>
+                            <th class="p-3 font-bold text-text-main">3世代・グループ<br><span class="text-xs text-text-sub font-normal">(5~6名)</span></th>
+                            <td class="p-3 text-text-main">親世帯は1階和室、子世帯は2階ベッドルームへ。トイレは各階にあるので気兼ねなく過ごせます。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. 設備・スペック -->
+        <section class="mb-16 px-2">
+            <h3 class="text-lg font-bold text-text-main mb-4 border-b-2 border-gray-100 pb-2">お部屋の設備</h3>
+            
+            <!-- アイコン -->
+            <div class="grid grid-cols-4 gap-2 mb-8">
+                <div class="amenity-box"><i class="fa-solid fa-wifi"></i>Wi-Fi</div>
+                <div class="amenity-box"><i class="fa-solid fa-kitchen-set"></i>キッチン</div>
+                <div class="amenity-box"><i class="fa-solid fa-bath"></i>お風呂</div>
+                <div class="amenity-box"><i class="fa-solid fa-snowflake"></i>エアコン</div>
+                <div class="amenity-box"><i class="fa-solid fa-tv"></i>TV</div>
+                <div class="amenity-box"><i class="fa-solid fa-shirt"></i>洗濯機</div>
+                <div class="amenity-box"><i class="fa-solid fa-square-parking"></i>駐車場</div>
+                <div class="amenity-box text-gray-300 border-gray-100 bg-gray-50"><i class="fa-solid fa-ban text-gray-300"></i>パジャマ</div>
+            </div>
+
+            <!-- 詳細リスト -->
+            <table class="w-full text-sm spec-table">
+                <tr><th>寝具</th><td>ダブルベッド×2、シングル布団×3</td></tr>
+                <tr><th>キッチン</th><td>IHコンロ、冷蔵庫、電子レンジ、炊飯器、調理器具一式</td></tr>
+                <tr><th>アメニティ</th><td>シャンプー、リンス、ボディソープ、ドライヤー、タオル</td></tr>
+                <tr><th>駐車場</th><td>敷地内2台（無料）※冬期は要スタッドレス</td></tr>
+            </table>
+        </section>
+
+        <!-- 4. ギャラリー -->
+        <section class="mb-16 px-2">
+            <h3 class="text-lg font-bold text-text-main mb-4 border-b-2 border-gray-100 pb-2">フォトギャラリー</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <img src="https://placehold.co/400x300?text=Living" class="rounded-lg object-cover w-full aspect-[4/3]">
+                <img src="https://placehold.co/400x300?text=Kitchen" class="rounded-lg object-cover w-full aspect-[4/3]">
+                <img src="https://placehold.co/400x300?text=Bedroom" class="rounded-lg object-cover w-full aspect-[4/3]">
+                <img src="https://placehold.co/400x300?text=Bath" class="rounded-lg object-cover w-full aspect-[4/3]">
+            </div>
+        </section>
+
+        <!-- 5. 編集長レビュー -->
+        <section class="mb-16 px-2">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="../../images/editor-kodani.webp" class="w-14 h-14 rounded-full border-2 border-white shadow-sm object-cover" alt="編集長">
+                    <div>
+                        <p class="text-xs font-bold text-brand">プロの視点</p>
+                        <h3 class="text-base font-bold text-text-main">編集長コダニの正直レビュー</h3>
+                    </div>
+                </div>
+                <div class="space-y-4 text-sm leading-7 text-text-main">
+                    <p>
+                        <span class="font-bold text-secondary">【ここが良い】</span><br>
+                        とにかく「静けさ」が最高です。周りに民家がないので、夜は本当の真っ暗闇と星空を楽しめます。内装はフルリノベ済みで清潔感があり、特に水回りが新しいのが嬉しいポイント。
+                    </p>
+                    <p>
+                        <span class="font-bold text-brand">【ここは注意】</span><br>
+                        自然の中にあるため、夏場は虫（カメムシなど）が出ます。苦手な方はご注意を。また、最寄りのコンビニまで車で10分かかるので、買い出しはチェックイン前に済ませるのが鉄則です。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 周辺情報 -->
+        <section class="mb-16 px-2">
+            <h3 class="text-lg font-bold text-text-main mb-4 border-b-2 border-gray-100 pb-2">買い物・食事</h3>
+            <ul class="space-y-3 text-sm">
+                <li class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                    <span class="font-bold"><i class="fa-solid fa-cart-shopping text-brand mr-2"></i>スーパーまるご</span>
+                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">車で5分</span>
+                </li>
+                <li class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                    <span class="font-bold"><i class="fa-solid fa-store text-brand mr-2"></i>ローソン</span>
+                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">車で3分</span>
+                </li>
+                <li class="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                    <span class="font-bold"><i class="fa-solid fa-utensils text-brand mr-2"></i>回転寿司 北海道</span>
+                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">車で10分</span>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- 固定フッター (スマホ用) -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-orange-100 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50 md:hidden">
+        <div class="flex items-center justify-between gap-4">
+            <div>
+                <p class="text-[10px] font-bold text-gray-400">参考価格</p>
+                <p class="text-lg font-extrabold text-brand">¥35,000<span class="text-xs font-normal text-text-main">/棟〜</span></p>
+            </div>
+            <a href="#" class="flex-1 bg-brand text-white font-bold py-3 rounded-xl shadow-md text-center hover:bg-orange-600 transition">
+                空室を確認する <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- フッター (PC用追従) -->
+    <div class="hidden md:block fixed bottom-8 right-8 z-50">
+        <a href="#" class="bg-brand text-white font-bold py-4 px-10 rounded-full shadow-float hover:bg-orange-600 transition flex items-center gap-2 transform hover:scale-105">
+            <i class="fa-regular fa-calendar-check text-xl"></i>
+            空室をチェック
+        </a>
+    </div>
+
+    <!-- 共通フッター -->
+    <footer class="w-full bg-gray-50 border-t border-gray-200 py-10 px-6 text-center text-xs text-gray-400">
+        <div class="mb-4">
+            <a href="../../index.html" class="font-bold text-text-main hover:text-brand">トップページに戻る</a>
+        </div>
+        <p>&copy; 2025 Sanin Stay / AP Company LLC.</p>
+    </footer>
+
+</body>
+</html>

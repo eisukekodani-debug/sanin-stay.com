@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山陰の隠れ家・一棟貸し図鑑｜鳥取・島根の古民家宿厳選ガイド</title>
+    <meta name="description" content="山陰（鳥取県・島根県東部）の一棟貸し宿・古民家を、宿泊運営のプロが厳選。大山、米子、境港エリアの「失敗しない宿選び」を、ちょっぴり辛口なレビューとともにサポートします。">
+    
+    <!-- SEO: 構造化データ (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "山陰の隠れ家・一棟貸し図鑑",
+      "url": "https://sanin-stay.com/",
+      "description": "山陰（鳥取・島根）の一棟貸し宿・古民家を厳選紹介するメディア。",
+      "publisher": {
+        "@type": "Organization",
+        "name": "APカンパニー合同会社",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://sanin-stay.com/images/logo.png"
+        }
+      }
+    }
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CSV Parser (PapaParse) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#faf9f6',
+                        'ink': '#2b2b2b',
+                        'pencil': '#595959',
+                        'accent-yellow': '#f7d057',
+                        'accent-blue': '#8ecae6',
+                        'accent-green': '#a7c957',
+                        'accent-red': '#e76f51',
+                    },
+                    fontFamily: {
+                        sans: ['"Zen Maru Gothic"', 'sans-serif'],
+                        hand: ['"Yomogi"', 'cursive'],
+                    },
+                    boxShadow: {
+                        'subtle': '0 1px 2px rgba(0,0,0,0.05)',
+                        'paper': '2px 3px 0px rgba(0,0,0,0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* --- 基本設定 --- */
+        body {
+            background-color: #faf9f6;
+            color: #2b2b2b;
+            font-feature-settings: "palt";
+            letter-spacing: 0.05em;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        
+        .marker-yellow { background: linear-gradient(transparent 70%, rgba(247, 208, 87, 0.4) 70%); }
+        .photo-border { border: 4px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+
+        /* --- 更新性のためのCSSオートメーション --- */
+        .area-card { transition: all 0.3s ease; }
+        .area-card:hover { transform: translateY(-4px) rotate(0deg) !important; z-index: 10; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .area-card:nth-child(3n+1) { transform: rotate(1deg); }
+        .area-card:nth-child(3n+2) { transform: rotate(-1deg) translateY(1rem); }
+        .area-card:nth-child(3n+3) { transform: rotate(1.5deg) translateY(0.5rem); }
+
+        .review-card { transition: all 0.3s ease; }
+        .review-card:hover { transform: translateY(-2px) rotate(0deg) !important; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .review-card:nth-child(odd) { transform: rotate(1deg); }
+        .review-card:nth-child(even) { transform: rotate(-1deg); }
+
+        .column-item { transition: all 0.2s ease; border: 1px solid transparent; }
+        .column-item:hover { background-color: #fff; border-color: #e5e5e5; transform: scale(1.01); }
+        .column-item:nth-child(3n+1) .column-icon { background-color: rgba(142, 202, 230, 0.2); }
+        .column-item:nth-child(3n+2) .column-icon { background-color: rgba(231, 111, 81, 0.2); }
+        .column-item:nth-child(3n+3) .column-icon { background-color: rgba(247, 208, 87, 0.2); }
+
+        .has-tape::before {
+            content: ''; position: absolute; height: 24px; width: 80px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-left: 1px dashed rgba(0,0,0,0.1); border-right: 1px dashed rgba(0,0,0,0.1);
+            transform: rotate(-25deg); z-index: 20; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            top: -10px; left: 50%; margin-left: -40px; pointer-events: none;
+        }
+        
+        .loading-skeleton {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-[15px] leading-8 overflow-x-hidden">
+
+    <header class="w-full py-6 px-4 md:px-8 border-b border-dashed border-gray-300 bg-paper/90 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-lg md:text-xl font-bold tracking-widest text-ink flex items-center gap-2 group">
+                <a href="/" class="flex items-center gap-1" aria-label="トップページへ">
+                    <span class="text-accent-red font-bold text-2xl -rotate-3 mr-1 group-hover:rotate-0 transition">山陰</span>
+                    <span class="text-ink">一棟貸し図鑑</span>
+                </a>
+            </h1>
+            <nav class="flex gap-6 text-sm font-medium text-pencil items-center">
+                <a href="#feature" class="hover:text-accent-red relative group transition">特集<span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent-red transition-all group-hover:w-full"></span></a>
+                <a href="#area" class="hover:text-accent-red relative group transition">エリア<span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent-red transition-all group-hover:w-full"></span></a>
+                <a href="#column" class="hover:text-accent-red relative group transition">読み物<span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent-red transition-all group-hover:w-full"></span></a>
+                <a href="#review" class="hover:text-accent-red relative group transition">レビュー<span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent-red transition-all group-hover:w-full"></span></a>
+                <div class="h-4 w-px bg-gray-300 mx-2"></div>
+                <a href="/en/" class="text-gray-400 hover:text-ink text-xs font-bold transition">EN</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="w-full max-w-5xl mx-auto px-4 md:px-12 pb-32">
+        
+        <!-- Intro -->
+        <section class="mt-16 md:mt-24 mb-32 relative">
+            <div class="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+                <div class="w-full md:w-1/2 relative">
+                    <div class="relative overflow-hidden rounded-sm shadow-md has-tape">
+                        <img src="images/intro-main.webp" alt="大山町の一棟貸し宿、縁側から見る午後の光" class="w-full h-auto object-cover">
+                    </div>
+                    <p class="font-hand text-xs text-gray-400 mt-2 text-right">大山町、ある日の午後。</p>
+                </div>
+
+                <div class="w-full md:w-1/2 pt-4 md:pt-0">
+                    <h2 class="text-2xl md:text-3xl font-bold leading-relaxed mb-8 text-ink">
+                        失敗しない、<br>
+                        <span class="marker-yellow">山陰の隠れ家</span>選び。
+                    </h2>
+                    <div class="text-sm md:text-[15px] leading-loose text-ink space-y-6">
+                        <p>
+                            はじめまして、編集長のコダニです。<br>
+                            せっかくの旅行、「宿選びで失敗したくない」って思いますよね。<br>
+                            わかります。私もそうです。
+                        </p>
+                        <p>
+                            だからこの図鑑では、きれいな写真だけじゃなくて、<br>
+                            <strong>「水回りは清潔か？」</strong>とか、<br>
+                            <strong>「冬は寒くないか？」</strong>とか、<br>
+                            住んでみないとわからないことまで、<br>
+                            おせっかいなほど正直に記録しました。
+                        </p>
+                        <p>次の休み、どこへ籠りましょうか？</p>
+
+                        <div class="flex items-center gap-4 mt-8 pt-6 border-t border-dashed border-gray-300">
+                            <div class="relative">
+                                <img src="images/editor-kodani.webp" class="w-12 h-12 rounded-full border border-gray-200 p-0.5 grayscale hover:grayscale-0 transition object-cover" alt="案内人：コダニ・エイスケ">
+                                <span class="absolute -bottom-1 -right-1 bg-accent-yellow text-[9px] font-bold px-1.5 rounded-full border border-white">編集長</span>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-pencil mb-0.5">案内人</p>
+                                <p class="text-sm font-bold">コダニ・エイスケ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature (PR) : Dynamic -->
+        <section id="feature" class="mb-32 relative">
+            <div class="absolute -left-4 top-10 w-24 h-24 bg-accent-yellow/10 rounded-full blur-2xl"></div>
+            <div class="flex items-baseline justify-between mb-6 relative z-10">
+                <h2 class="text-lg font-bold flex items-center gap-2">
+                    <span class="w-2 h-2 bg-accent-yellow rounded-full animate-pulse"></span>
+                    今月の特集
+                </h2>
+                <span class="font-hand text-xs text-pencil">Special Feature</span>
+            </div>
+            <div id="feature-container" class="min-h-[300px]">
+                <div class="loading-skeleton w-full h-[400px]"></div>
+            </div>
+        </section>
+
+        <!-- Area List : Static -->
+        <section id="area" class="mb-32">
+            <div class="text-center mb-12">
+                <h2 class="text-lg font-bold inline-block relative">
+                    エリアから探す
+                    <span class="absolute -bottom-2 left-0 w-full h-1 bg-accent-blue/30 rounded-full"></span>
+                </h2>
+                <p class="font-hand text-sm text-pencil mt-4">まずは、魅力の濃い3つのエリアから。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                <a href="./area/daisen/index.html" class="group block area-card">
+                    <div class="bg-white p-3 pb-6 border border-gray-100 shadow-paper rounded-sm relative">
+                        <div class="overflow-hidden aspect-[3/4] mb-4 rounded-sm border border-gray-100">
+                            <img src="images/area-daisen.webp" alt="大山エリア" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-bold text-center mb-2 group-hover:text-accent-red transition">大山エリア</h3>
+                        <p class="text-xs text-pencil text-center leading-relaxed px-2">
+                            西日本最大級のブナの森。<br>静寂とサウナならここ。<br>冬は雪道運転の覚悟を。
+                        </p>
+                        <div class="absolute -top-3 -right-3 w-12 h-12 bg-accent-green rounded-full flex items-center justify-center text-white text-[10px] font-bold rotate-12 shadow-md group-hover:scale-110 transition">推し</div>
+                    </div>
+                </a>
+                <a href="./area/yonago/index.html" class="group block area-card">
+                    <div class="bg-white p-3 pb-6 border border-gray-100 shadow-paper rounded-sm relative">
+                        <div class="overflow-hidden aspect-square mb-4 rounded-sm border border-gray-100">
+                            <img src="images/area-yonago.webp" alt="米子・皆生エリア" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-bold text-center mb-2 group-hover:text-accent-red transition">米子・皆生エリア</h3>
+                        <p class="text-xs text-pencil text-center leading-relaxed px-2">
+                            海辺の温泉地と街の便利さ。<br>夜は飲み歩きたい人に。<br>ワーケーションにも◎。
+                        </p>
+                    </div>
+                </a>
+                <a href="./area/sakaiminato/index.html" class="group block area-card">
+                    <div class="bg-white p-3 pb-6 border border-gray-100 shadow-paper rounded-sm relative">
+                        <div class="overflow-hidden aspect-[4/3] mb-4 rounded-sm border border-gray-100">
+                            <img src="images/area-sakaiminato.webp" alt="境港エリア" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-bold text-center mb-2 group-hover:text-accent-red transition">境港エリア</h3>
+                        <p class="text-xs text-pencil text-center leading-relaxed px-2">
+                            水木しげるロードと漁港。<br>風情はあるが断熱は要注意。<br>魚は最高に旨いです。
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Column List : Dynamic -->
+        <section id="column" class="mb-32">
+            <div class="bg-white border border-gray-200 rounded-lg p-8 md:p-12 relative overflow-hidden shadow-sm">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-accent-blue/10 rounded-full blur-3xl"></div>
+                <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-accent-yellow/10 rounded-full blur-3xl"></div>
+
+                <div class="flex flex-col md:flex-row gap-12 relative z-10">
+                    <div class="w-full md:w-1/3">
+                        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <i class="fa-regular fa-lightbulb text-accent-yellow"></i>
+                            旅のヒントと、<br>よもやま話。
+                        </h2>
+                        <p class="text-sm text-pencil leading-7 mb-6">
+                            宿が決まっても、心配事は尽きないもの。「タイヤはどうする？」「地元のスーパーは？」など、編集部が足で稼いだニッチな情報をお届けします。
+                        </p>
+                        <a href="./column/index.html" class="inline-block text-xs font-bold text-accent-red border border-accent-red px-4 py-2 rounded-full hover:bg-accent-red hover:text-white transition">コラム一覧へ</a>
+                    </div>
+                    <div id="column-container" class="w-full md:w-2/3 space-y-4">
+                        <div class="loading-skeleton w-full h-20"></div>
+                        <div class="loading-skeleton w-full h-20"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Purpose -->
+        <section id="purpose" class="mb-32 text-center">
+            <h2 class="text-lg font-bold inline-block relative mb-10">
+                目的から探す
+                <span class="absolute -bottom-2 left-0 w-full h-1 bg-accent-yellow/30 rounded-full"></span>
+            </h2>
+            <div class="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+                <a href="./purpose/family/index.html" class="bg-white border border-gray-200 px-6 py-3 rounded-full hover:border-accent-green hover:text-accent-green hover:shadow-subtle transition group flex items-center gap-2">
+                    <i class="fa-solid fa-people-roof text-gray-300 group-hover:text-accent-green transition"></i>
+                    <span class="font-bold text-sm">家族・子連れ</span>
+                    <span class="text-xs text-gray-400 pl-2 border-l border-gray-200">騒いでも安心</span>
+                </a>
+                <a href="./purpose/pet/index.html" class="bg-white border border-gray-200 px-6 py-3 rounded-full hover:border-accent-green hover:text-accent-green hover:shadow-subtle transition group flex items-center gap-2">
+                    <i class="fa-solid fa-paw text-gray-300 group-hover:text-accent-green transition"></i>
+                    <span class="font-bold text-sm">ペット同伴</span>
+                    <span class="text-xs text-gray-400 pl-2 border-l border-gray-200">大型犬OKも</span>
+                </a>
+                <a href="./purpose/group/index.html" class="bg-white border border-gray-200 px-6 py-3 rounded-full hover:border-accent-green hover:text-accent-green hover:shadow-subtle transition group flex items-center gap-2">
+                    <i class="fa-solid fa-users-line text-gray-300 group-hover:text-accent-green transition"></i>
+                    <span class="font-bold text-sm">3世代・大人数</span>
+                    <span class="text-xs text-gray-400 pl-2 border-l border-gray-200">気兼ねなく</span>
+                </a>
+                <div class="bg-gray-100 border border-transparent px-6 py-3 rounded-full text-gray-400 cursor-not-allowed flex items-center gap-2">
+                    <i class="fa-solid fa-laptop text-gray-300"></i>
+                    <span class="font-bold text-sm">ワーケーション</span>
+                    <span class="text-xs pl-2 border-l border-gray-300">準備中</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Review List : Dynamic -->
+        <section id="review" class="mb-24">
+            <div class="flex items-center justify-between mb-8 border-b border-gray-200 pb-2">
+                <h2 class="text-lg font-bold">編集長レビュー</h2>
+                <a href="./review/index.html" class="text-xs font-bold text-pencil hover:text-ink">記事一覧へ &rarr;</a>
+            </div>
+            <div id="review-container" class="grid md:grid-cols-2 gap-8">
+                <div class="loading-skeleton w-full h-64"></div>
+                <div class="loading-skeleton w-full h-64"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-white border-t-4 border-accent-yellow">
+        <div class="max-w-4xl mx-auto py-16 px-6">
+            <div class="bg-paper border border-dashed border-gray-300 p-8 rounded-lg text-center mb-12 relative hover:shadow-subtle transition">
+                <i class="fa-solid fa-key text-accent-yellow text-2xl absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-2"></i>
+                <h4 class="font-bold text-ink text-base mb-3">宿泊施設の稼働率を向上させたいオーナー様へ</h4>
+                <p class="text-xs text-pencil mb-6 leading-relaxed">
+                    「良い点も悪い点も伝える」独自の編集方針で、<br class="hidden md:inline">ミスマッチのない良質な顧客との出会いを作ります。また、業務DX化など宿泊運営の仕組みづくりも伴奏サポートします。
+                </p>
+                <div class="flex justify-center gap-6 text-sm font-bold">
+                    <a href="./business/index.html" class="text-accent-red border-b border-accent-red hover:opacity-70 pb-0.5">運営サポートについて</a>
+                    <a href="./business/contact.html" class="text-accent-red border-b border-accent-red hover:opacity-70 pb-0.5">掲載のお問い合わせ</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between gap-8 text-xs text-pencil">
+                <div class="space-y-2">
+                    <p class="font-bold text-ink text-sm flex items-center gap-1">
+                        <span class="text-accent-red font-bold -rotate-3 mr-1">山陰</span>
+                        <span>一棟貸し図鑑</span>
+                    </p>
+                    <p class="leading-relaxed">
+                        運営・監修：APカンパニー合同会社<br>
+                        編集長：コダニ・エイスケ
+                    </p>
+                </div>
+                <div class="md:text-right space-y-2">
+                    <div class="flex md:justify-end gap-4 mb-2">
+                        <a href="./about/index.html" class="hover:text-ink underline decoration-gray-300 underline-offset-2">編集部について</a>
+                        <a href="./privacy/index.html" class="hover:text-ink underline decoration-gray-300 underline-offset-2">プライバシーポリシー</a>
+                        <a href="./contact/index.html" class="hover:text-ink underline decoration-gray-300 underline-offset-2">お問い合わせ</a>
+                    </div>
+                    <p>&copy; 2025 Sanin Stay / AP Company LLC.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- スプレッドシート連携スクリプト -->
+    <script>
+        // ▼ ここにスプレッドシートの公開CSV URLを貼ってください
+        const SPREADSHEET_FEATURE_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoX2yo5Ywc1q0caVMbYeB5DrJmNeYlaLnLJZdO40VyySeMsIueYax4bIM6XO2zb7F1A32u-vRUOtmD/pub?gid=0&single=true&output=csv"; 
+        const SPREADSHEET_COLUMN_CSV  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoX2yo5Ywc1q0caVMbYeB5DrJmNeYlaLnLJZdO40VyySeMsIueYax4bIM6XO2zb7F1A32u-vRUOtmD/pub?gid=987166770&single=true&output=csv"; 
+        const SPREADSHEET_REVIEW_CSV  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoX2yo5Ywc1q0caVMbYeB5DrJmNeYlaLnLJZdO40VyySeMsIueYax4bIM6XO2zb7F1A32u-vRUOtmD/pub?gid=875022554&single=true&output=csv"; 
+
+        // 初期データ（スプレッドシート未設定時用）
+        const defaultData = {
+            features: [
+                {
+                    label: "PR記事",
+                    images: ["images/feature-pr-main.webp"],
+                    badge: "潜入レポート",
+                    title: "大山の麓、築80年の古民家を完全リノベ。<br>「断熱×薪サウナ」で、氷点下の森が極上のリゾートに。",
+                    text: "窓の外はマイナス3度の銀世界。でも室内は、Tシャツ1枚で過ごせる暖かさ。オーナーがこだわり抜いた「トリプルガラス」と「北欧製薪ストーブ」のおかげで、古民家特有の寒さはゼロ。雪見サウナの後は、大山の伏流水でキリッと整う。そんな“冬こそ行きたい”隠れ家での一日をレポートします。",
+                    link: "#feature-detail",
+                    sub_image_text: "水風呂は、キンキンの伏流水。"
+                }
+            ],
+            columns: [
+                { icon: "🚗", title: "山陰の冬、ノーマルタイヤで大丈夫？", text: "結論：12月〜3月はスタッドレス必須です。レンタカーを借りる時の注意点をまとめました。", link: "#" },
+                { icon: "🦀", title: "編集長が愛する「地元のスーパー」3選", text: "カニを買うならここ。BBQの肉ならあそこ。地元民御用達の店教えます。", link: "#" },
+                { icon: "♨️", title: "皆生温泉、日帰り入浴の穴場。", text: "混雑を避けてゆっくり浸かりたい人へ。レトロな銭湯スタイルもいいですよ。", link: "#" }
+            ],
+            reviews: [
+                {
+                    area: "米子・皆生",
+                    date: "2023.10.18",
+                    title: "古民家なのにWi-Fi爆速。<br>ワーケーションに死角なし。",
+                    text: "デスク周りの電源確保と椅子の質に、オーナーの本気を見ました。ただし、脱衣所は少し寒いです。そこだけ注意。",
+                    images: ["images/review-yonago-01.webp", "images/review-yonago-02.webp"],
+                    link: "#"
+                },
+                {
+                    area: "境港",
+                    date: "2023.10.10",
+                    title: "港町の風情ある長屋ステイ。<br>冬の隙間風は正直寒いです。",
+                    text: "雰囲気は満点ですが、断熱性能は低め。厚手のパジャマ必須です。でも、春〜秋は窓を開けると最高に気持ちいいんです。",
+                    images: ["images/review-sakaiminato.webp"],
+                    link: "#"
+                }
+            ]
+        };
+
+        // テキストのエスケープ処理（簡易版）
+        function escapeHtml(text) {
+            if (!text) return "";
+            return text.replace(/&/g, "&amp;")
+                       .replace(/</g, "&lt;")
+                       .replace(/>/g, "&gt;")
+                       .replace(/"/g, "&quot;")
+                       .replace(/'/g, "&#039;");
+        }
+        
+        // 改行コード(\n)を<br>タグに変換する処理
+        function nl2br(text) {
+            if (!text) return "";
+            return text.replace(/(\r\n|\n|\r)/g, '<br>');
+        }
+
+        // CSV画像の処理（カンマ区切りを配列に）
+        function parseImages(imageField) {
+            if (!imageField) return [];
+            if (Array.isArray(imageField)) return imageField;
+            return imageField.split(',').map(s => s.trim()).filter(s => s);
+        }
+
+        async function init() {
+            const features = SPREADSHEET_FEATURE_CSV ? await fetchCsv(SPREADSHEET_FEATURE_CSV) : defaultData.features;
+            const columns  = SPREADSHEET_COLUMN_CSV  ? await fetchCsv(SPREADSHEET_COLUMN_CSV)  : defaultData.columns;
+            const reviews  = SPREADSHEET_REVIEW_CSV  ? await fetchCsv(SPREADSHEET_REVIEW_CSV)  : defaultData.reviews;
+
+            renderFeatures(features);
+            renderColumns(columns);
+            renderReviews(reviews);
+        }
+
+        async function fetchCsv(url) {
+            return new Promise((resolve) => {
+                Papa.parse(url, {
+                    download: true,
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        resolve(results.data);
+                    },
+                    error: function(err) {
+                        console.error("CSV Load Error:", err);
+                        resolve([]); 
+                    }
+                });
+            });
+        }
+
+        function renderFeatures(data) {
+            const container = document.getElementById('feature-container');
+            if(!data || data.length === 0) return;
+            const item = data[0]; 
+            const images = parseImages(item.images);
+            const mainImage = images.length > 0 ? images[0] : "";
+
+            container.innerHTML = `
+                <a href="${item.link}" class="block group relative z-10">
+                    <div class="absolute inset-0 bg-white rounded-lg transform translate-x-2 translate-y-2 border border-gray-200 group-hover:translate-x-3 group-hover:translate-y-3 transition duration-300"></div>
+                    <div class="relative bg-white border border-gray-200 rounded-lg p-6 md:p-10 flex flex-col md:flex-row gap-8 transition duration-300">
+                        <span class="absolute top-0 left-6 bg-accent-yellow text-ink text-[10px] font-bold px-3 py-1 rounded-b-sm z-10 shadow-sm">${escapeHtml(item.label) || 'PR記事'}</span>
+                        <div class="w-full md:w-1/2 relative">
+                            <div class="overflow-hidden rounded-sm aspect-[4/3] relative">
+                                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition z-10"></div>
+                                <img src="${mainImage}" alt="${escapeHtml(item.title).replace(/<br>/g, '')}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                            </div>
+                            ${item.sub_image_text ? `<div class="absolute -bottom-3 -right-3 bg-white px-2 py-1 border border-gray-200 font-hand text-xs text-pencil rotate-2 shadow-sm z-20 group-hover:rotate-6 transition">${escapeHtml(item.sub_image_text)}</div>` : ''}
+                        </div>
+                        <div class="w-full md:w-1/2 flex flex-col justify-center">
+                            <p class="text-accent-red font-bold text-xs tracking-widest mb-3 border-b border-accent-red/30 inline-block w-fit">${escapeHtml(item.badge) || 'Report'}</p>
+                            <h3 class="text-xl md:text-2xl font-bold mb-4 leading-relaxed group-hover:text-accent-red transition">
+                                ${nl2br(item.title)} <!-- CSVからの改行を反映 -->
+                            </h3>
+                            <p class="text-sm text-pencil mb-6 leading-relaxed">
+                                ${nl2br(item.text)}
+                            </p>
+                            <div class="text-right">
+                                <span class="text-sm font-bold border-b-2 border-accent-yellow pb-1 group-hover:bg-accent-yellow group-hover:border-transparent transition px-2 rounded-sm inline-block">
+                                    続きを読む <i class="fa-solid fa-angle-right ml-1 text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+
+        function renderColumns(data) {
+            const container = document.getElementById('column-container');
+            if(!data) return;
+            
+            container.innerHTML = data.map(item => `
+                <a href="${item.link}" class="flex gap-4 items-start group p-4 rounded-lg column-item">
+                    <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-xl group-hover:scale-110 transition column-icon">${item.icon}</div>
+                    <div>
+                        <h3 class="text-sm font-bold group-hover:text-accent-red transition">${nl2br(item.title)}</h3>
+                        <p class="text-xs text-pencil mt-1">${nl2br(item.text)}</p>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function renderReviews(data) {
+            const container = document.getElementById('review-container');
+            if(!data) return;
+
+            container.innerHTML = data.map(item => {
+                let imagesHtml = '';
+                const imgs = parseImages(item.images);
+                
+                imgs.forEach(src => {
+                    if(src) imagesHtml += `<img src="${src.trim()}" class="h-full w-auto object-cover rounded-sm border border-gray-100">`;
+                });
+
+                return `
+                <article class="bg-white p-6 shadow-paper border border-gray-100 rounded-sm review-card group">
+                    <a href="${item.link}" class="block">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="bg-paper text-ink text-xs font-bold px-2 py-1 rounded-sm border border-gray-200">${escapeHtml(item.area)}</span>
+                            <span class="font-hand text-xs text-gray-400">${escapeHtml(item.date)}</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-4 leading-relaxed group-hover:text-accent-red transition">
+                            ${nl2br(item.title)}
+                        </h3>
+                        <div class="flex gap-2 mb-4 h-24">
+                            ${imagesHtml}
+                        </div>
+                        <p class="text-sm text-pencil leading-6">
+                            ${nl2br(item.text)}
+                        </p>
+                    </a>
+                </article>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

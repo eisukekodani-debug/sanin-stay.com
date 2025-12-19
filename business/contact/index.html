@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掲載・運営サポートのお問い合わせ｜山陰一棟貸し図鑑</title>
+    <meta name="description" content="山陰エリアの宿泊施設オーナー様向けのお問い合わせフォームです。掲載のご依頼、運営代行、収支改善のご相談など、お気軽にご連絡ください。">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': '#f97316',
+                        'brand-light': '#fff7ed',
+                        'text-main': '#475569',
+                        'text-sub': '#94a3b8',
+                        'bg-base': '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'form': '0 4px 20px rgba(0, 0, 0, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #475569;
+            font-feature-settings: "palt";
+            letter-spacing: 0.03em;
+        }
+        /* フォーム入力欄のスタイル */
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background-color: #fff;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+        }
+        /* 必須バッジ */
+        .badge-required {
+            background-color: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .badge-optional {
+            background-color: #94a3b8;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-sm md:text-base leading-relaxed flex flex-col min-h-screen">
+
+    <!-- Header (Simple) -->
+    <header class="w-full bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex justify-between items-center">
+            <a href="../../index.html" class="flex items-center gap-2 group hover:opacity-80 transition">
+                <i class="fa-solid fa-house-chimney text-xl text-brand"></i>
+                <span class="font-bold text-text-main">山陰一棟貸し図鑑</span>
+            </a>
+            <a href="../../business/index.html" class="text-xs font-bold text-brand border border-brand px-3 py-1 rounded hover:bg-brand hover:text-white transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> ご案内へ戻る
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow py-12 md:py-20 px-4">
+        <div class="max-w-3xl mx-auto">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-2xl md:text-3xl font-bold text-text-main mb-4">
+                    掲載・運営サポートのお問い合わせ
+                </h1>
+                <p class="text-text-sub">
+                    以下のフォームよりお気軽にご連絡ください。<br>
+                    内容を確認後、担当者より2営業日以内に折り返しご連絡いたします。
+                </p>
+            </div>
+
+            <div class="bg-white p-6 md:p-10 rounded-2xl shadow-form border border-gray-100">
+                
+                <!-- Googleフォームを埋め込む場合はここにiframeを入れる -->
+                <!-- <iframe src="..." width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe> -->
+
+                <!-- 以下はHTMLフォームのモックアップ -->
+                <form action="#" method="POST" class="space-y-8">
+                    
+                    <!-- お問い合わせ種別 -->
+                    <div>
+                        <label class="block font-bold text-text-main mb-2">お問い合わせ内容 <span class="badge-required">必須</span></label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="type" class="w-4 h-4 text-brand focus:ring-brand" checked>
+                                <span>掲載・取材の依頼</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="type" class="w-4 h-4 text-brand focus:ring-brand">
+                                <span>運営代行・サポートの相談</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="type" class="w-4 h-4 text-brand focus:ring-brand">
+                                <span>空き家活用について</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="type" class="w-4 h-4 text-brand focus:ring-brand">
+                                <span>その他</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 施設名 -->
+                    <div>
+                        <label class="block font-bold text-text-main mb-2">施設名（お持ちの場合） <span class="badge-optional">任意</span></label>
+                        <input type="text" class="form-input" placeholder="例：大山リゾートヴィラ">
+                    </div>
+
+                    <!-- お名前 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold text-text-main mb-2">お名前 <span class="badge-required">必須</span></label>
+                            <input type="text" class="form-input" placeholder="例：山田 太郎">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-text-main mb-2">会社名 <span class="badge-optional">任意</span></label>
+                            <input type="text" class="form-input" placeholder="例：株式会社〇〇">
+                        </div>
+                    </div>
+
+                    <!-- メールアドレス -->
+                    <div>
+                        <label class="block font-bold text-text-main mb-2">メールアドレス <span class="badge-required">必須</span></label>
+                        <input type="email" class="form-input" placeholder="例：info@example.com">
+                    </div>
+
+                    <!-- 電話番号 -->
+                    <div>
+                        <label class="block font-bold text-text-main mb-2">電話番号 <span class="badge-optional">任意</span></label>
+                        <input type="tel" class="form-input" placeholder="例：090-1234-5678">
+                    </div>
+
+                    <!-- メッセージ本文 -->
+                    <div>
+                        <label class="block font-bold text-text-main mb-2">ご相談内容 <span class="badge-required">必須</span></label>
+                        <textarea class="form-input h-40 resize-y" placeholder="現状の課題や、ご希望のサポート内容などをご記入ください。"></textarea>
+                    </div>
+
+                    <!-- 送信ボタン -->
+                    <div class="pt-4 text-center">
+                        <button type="submit" class="bg-brand text-white font-bold py-4 px-12 rounded-full shadow-lg hover:bg-orange-600 transition transform hover:scale-105 w-full md:w-auto">
+                            上記の内容で送信する
+                        </button>
+                        <p class="text-xs text-gray-400 mt-4">
+                            <a href="../../privacy/index.html" class="underline hover:text-brand" target="_blank">プライバシーポリシー</a>に同意の上、送信してください。
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- FAQ (簡易版) -->
+            <div class="mt-16">
+                <h3 class="text-lg font-bold text-text-main mb-6 text-center">よくあるご質問</h3>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-bold text-brand mb-2">Q. まだリフォーム前ですが相談できますか？</p>
+                        <p class="text-sm text-text-sub">A. はい、可能です。リフォームの段階から「集客しやすい間取り・設備」のアドバイスも行なっております。</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-bold text-brand mb-2">Q. 対応エリアはどこまでですか？</p>
+                        <p class="text-sm text-text-sub">A. 現在は鳥取県全域と島根県東部（松江・出雲・安来）を中心にサポートしています。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-xs">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="mb-2">&copy; 2025 AP Company LLC.</p>
+            <p>※本フォームはSSL暗号化通信により保護されています。</p>
+        </div>
+    </footer>
+
+</body>
+</html>
